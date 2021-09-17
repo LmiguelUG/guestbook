@@ -24,12 +24,12 @@ class Application_Model_GuestbookMapper
         return $this->_dbTable;
     }
 
-    public function save(Application_Model_DbTable_Guestbook $guestbook)
+    public function save(Application_Model_Guestbook $guestbook)
     {
         $data = array (
             'email' => $guestbook->getEmail(),
             'comment' => $guestbook->getComment(),
-            'created' => dte('Y-m-d H:i:s'),
+            'created' => date('Y-m-d H:i:s'),
         );
 
         if(null === ( $id = $guestbook->getId()))
@@ -39,7 +39,7 @@ class Application_Model_GuestbookMapper
         } 
         else 
         {
-            $this->getDbTable()->update($data);
+            $this->getDbTable()->update($data, array('id = ?' => $id));
         }
     }
 
